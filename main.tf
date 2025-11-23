@@ -9,7 +9,7 @@ resource "random_password" "pwd" {
 
 resource "kubernetes_secret_v1" "pwd" {
   metadata {
-    name        = random_id.name.id
+    name        = random_id.name.hex
     namespace   = var.namespace
     labels      = var.additionalLabels
     annotations = var.additionalAnnotations
@@ -46,7 +46,7 @@ resource "kubernetes_manifest" "main" {
     apiVersion = "redis.redis.opstreelabs.in/v1beta2"
     kind       = var.clusterMode ? "RedisCluster" : "Redis"
     metadata = {
-      name      = random_id.name.id
+      name      = random_id.name.hex
       namespace = var.namespace
       labels    = var.additionalLabels
       annotations = merge({
