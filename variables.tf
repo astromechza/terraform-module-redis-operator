@@ -21,7 +21,7 @@ variable "clusterSize" {
 }
 
 variable "resources" {
-  type        = map(any)
+  type        = map
   default     = null
   description = "The resource limits and requests for each cluster node."
 
