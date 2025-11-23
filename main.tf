@@ -94,6 +94,8 @@ resource "kubernetes_manifest" "main" {
       } : null))
       redisExporter = {
         enabled = false
+        image = local.redisImage
+        imagePullPolicy = "IfNotPresent"
       }
       podSecurityContext = {
         runAsUser = 1000
