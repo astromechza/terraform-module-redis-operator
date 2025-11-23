@@ -21,12 +21,12 @@ variable "clusterSize" {
 }
 
 variable "resources" {
-  type = map
+  type        = map(any)
   default     = null
   description = "The resource limits and requests for each cluster node."
 
   validation {
-    condition = var.resources == null || length(setsubtract(keys(var.resources), ["resources", "limits"])) > 0
+    condition     = var.resources == null || length(setsubtract(keys(var.resources), ["resources", "limits"])) > 0
     error_message = "var.resources can only contain resources or limits keys"
   }
 }

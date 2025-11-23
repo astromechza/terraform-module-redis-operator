@@ -29,7 +29,7 @@ output "username" {
 }
 
 output "password" {
-  value     = random_password.pwd
+  value     = random_password.pwd.result
   sensitive = true
 }
 
@@ -42,7 +42,6 @@ locals {
 }
 
 resource "kubernetes_manifest" "main" {
-  for_each = toset(!var.clusterMode ? ["this"] : [])
   manifest = {
     apiVersion = "redis.redis.opstreelabs.in/v1beta2"
     kind       = var.clusterMode ? "RedisCluster" : "Redis"
@@ -59,7 +58,7 @@ resource "kubernetes_manifest" "main" {
         image           = local.redisImage
         imagePullPolicy = "IfNotPresent"
         redisSecret = {
-          name = random_id.name
+          name = kubernetes_secret_v1.pwd.metadata[0].name
           key  = "password"
         }
       }, var.resources != null ? { resources = var.resources } : {})
