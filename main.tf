@@ -68,7 +68,6 @@ resource "kubernetes_manifest" "main" {
           limits = var.resourceLimits
         } : {})
       }
-      persistenceEnabled = true,
       storage = merge({
         volumeClaimTemplate = {
           spec = merge({
