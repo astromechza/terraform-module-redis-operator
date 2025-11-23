@@ -54,14 +54,20 @@ resource "kubernetes_manifest" "main" {
       }, var.additionalAnnotations != null ? var.additionalAnnotations : {})
     }
     spec = merge({
-      kubernetesConfig = merge({
+      kubernetesConfig = {
         image           = local.redisImage
         imagePullPolicy = "IfNotPresent"
         redisSecret = {
           name = kubernetes_secret_v1.pwd.metadata[0].name
           key  = "password"
         }
-      }, var.resources != null ? { resources = var.resources } : {})
+        resources = merge({
+          }, var.resourceRequests != null ? {
+          requests = var.resourceRequests
+          } : {}, var.resourceLimits != null ? {
+          limits = var.resourceLimits
+        } : {})
+      }
       persistenceEnabled = true,
       storage = merge({
         volumeClaimTemplate = {

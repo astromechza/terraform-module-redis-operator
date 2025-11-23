@@ -8,15 +8,13 @@ run "plan" {
     namespace   = "default"
     clusterMode = true
     clusterSize = 3
-    resources = {
-      requests = {
-        cpu    = "1"
-        memory = "2GB"
-      }
-      limits = {
-        cpu    = "4"
-        memory = "8GB"
-      }
+    resourceRequests = {
+      cpu    = "1"
+      memory = "2GB"
+    }
+    resourceLimits = {
+      cpu    = "4"
+      memory = "8GB"
     }
     persistentDiskStorageClass = "standard"
     persistentDiskStorageSize  = "10GB"

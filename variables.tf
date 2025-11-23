@@ -20,15 +20,22 @@ variable "clusterSize" {
   }
 }
 
-variable "resources" {
-  type        = map
+variable "resourceRequests" {
+  type = object({
+    cpu    = string
+    memory = string
+  })
   default     = null
-  description = "The resource limits and requests for each cluster node."
+  description = "The resource requests for each cluster node."
+}
 
-  validation {
-    condition     = var.resources == null || length(setsubtract(keys(var.resources), ["resources", "limits"])) > 0
-    error_message = "var.resources can only contain resources or limits keys"
-  }
+variable "resourceLimits" {
+  type = object({
+    cpu    = string
+    memory = string
+  })
+  default     = null
+  description = "The resource limits for each cluster node."
 }
 
 variable "persistentDiskSize" {
