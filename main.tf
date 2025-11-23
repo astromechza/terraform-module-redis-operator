@@ -86,7 +86,7 @@ resource "kubernetes_manifest" "main" {
               accessModes = ["ReadWriteOnce"]
               resources = {
                 requests = {
-                  storage = "1GB"
+                  storage = "1G"
                 }
               }
             }, local.storageClassMixin)
