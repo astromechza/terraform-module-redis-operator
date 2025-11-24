@@ -21,19 +21,6 @@ resource "kubernetes_secret_v1" "pwd" {
 }
 
 locals {
-  username = "redis"
-}
-
-output "username" {
-  value = local.username
-}
-
-output "password" {
-  value     = random_password.pwd.result
-  sensitive = true
-}
-
-locals {
   redisImage = "quay.io/opstree/redis:latest"
 
   storageClassMixin = var.persistentDiskStorageClass != null ? {
@@ -93,8 +80,8 @@ resource "kubernetes_manifest" "main" {
           }
       } : null))
       redisExporter = {
-        enabled = false
-        image = local.redisImage
+        enabled         = false
+        image           = local.redisImage
         imagePullPolicy = "IfNotPresent"
       }
       podSecurityContext = {
