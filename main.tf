@@ -92,4 +92,8 @@ resource "kubernetes_manifest" "main" {
       clusterSize = var.clusterSize,
     } : {})
   }
+
+  field_manager {
+    force_conflicts = true
+  }
 }
