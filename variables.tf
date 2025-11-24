@@ -40,7 +40,7 @@ variable "resourceLimits" {
 
 variable "persistentDiskSize" {
   type        = string
-  default     = "1GB"
+  default     = "1G"
   description = "The persistent disk size."
 }
 
